@@ -27,20 +27,15 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="SENTINEL API", version="2.4.1", lifespan=lifespan)
 
 # ── CORS ─────────────────────────────────────────────
-import os
-ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    os.getenv("FRONTEND_URL", ""),
-    os.getenv("RENDER_EXTERNAL_URL", ""),
-]
-ALLOWED_ORIGINS = [o for o in ALLOWED_ORIGINS if o]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=False,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "https://aj-sentinel-frontend.onrender.com",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
     allow_headers=["*"],
     expose_headers=["*"],
 )
@@ -73,9 +68,9 @@ async def global_exception_handler(request: Request, exc: Exception):
 
 @app.get("/health")
 async def health():
-    return {"status": "ok", "service": "SENTINEL"}
+    return {"status": "ok", "service": "AJ SENTINEL"}
 
 
 @app.get("/")
 async def root():
-    return {"message": "SENTINEL API is running", "docs": "/docs"}
+    return {"message": "AJ SENTINEL API is running", "docs": "/docs"}
