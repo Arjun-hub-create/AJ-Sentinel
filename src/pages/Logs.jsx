@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Search, Pause, Play, Trash2, Download, Terminal } from "lucide-react"
 import Layout from "../Components/Layout/Layout"
-import { logsService } from "../services/logsservice"
+import { logsService } from "../services/logsService"
 import { useWebSocket } from "../hooks/useWebSocket"
 
 const SERVICES_LIST = ["auth-api", "payment-api", "user-service", "webhook-worker", "cdn-edge", "db-replica"]
