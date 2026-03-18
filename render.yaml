@@ -1,0 +1,40 @@
+services:
+  # Backend
+  - type: web
+    name: aj-sentinel-backend
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: APP_NAME
+        value: AJ SENTINEL
+      - key: APP_ENV
+        value: production
+      - key: MONGODB_URL
+        sync: false
+      - key: SECRET_KEY
+        sync: false
+      - key: DATABASE_NAME
+        value: sentinel_db
+      - key: ALGORITHM
+        value: HS256
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: 10080
+      - key: CHECK_INTERVAL_SECONDS
+        value: 30
+      - key: REQUEST_TIMEOUT_SECONDS
+        value: 10
+
+  # Frontend
+  - type: web
+    name: aj-sentinel-frontend
+    runtime: static
+    rootDir: .
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        sync: false
+      - key: VITE_WS_URL
+        sync: false

@@ -8,7 +8,7 @@ from app.core.config import settings
 from app.core.database import connect_db, close_db, db_instance
 from app.workers.monitor import start_scheduler, stop_scheduler
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 logger = logging.getLogger(__name__)
 
 
@@ -21,19 +21,31 @@ async def lifespan(app: FastAPI):
     yield
     stop_scheduler()
     await close_db()
+    logger.info("SENTINEL shutdown complete")
 
 
 app = FastAPI(title="SENTINEL API", version="2.4.1", lifespan=lifespan)
 
+# ── CORS ─────────────────────────────────────────────
+import os
+ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    os.getenv("FRONTEND_URL", ""),
+    os.getenv("RENDER_EXTERNAL_URL", ""),
+]
+ALLOWED_ORIGINS = [o for o in ALLOWED_ORIGINS if o]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allow_headers=["*"],
     expose_headers=["*"],
 )
 
+# ── Routes ────────────────────────────────────────────
 from app.routes.auth      import router as auth_router
 from app.routes.services  import router as services_router
 from app.routes.logs      import router as logs_router
