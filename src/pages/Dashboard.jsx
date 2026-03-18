@@ -5,8 +5,8 @@ import { useState, useEffect, useCallback } from "react"
    Tooltip, ResponsiveContainer, BarChart, Bar, Cell
  } from "recharts"
  import { Globe, AlertTriangle, Activity, Zap } from "lucide-react"
- import Layout from "../components/Layout/Layout"
- import MetricCard from "../components/MetricCard"
+ import Layout from "../Components/Layout/Layout"
+ import MetricCard from "../Components/MetricCard"
  import { dashboardService } from "../services/dashboardService"
  import { useWebSocket } from "../hooks/useWebSocket"
  

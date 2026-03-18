@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react"
  import { motion, AnimatePresence } from "framer-motion"
  import { Search, Pause, Play, Trash2, Download, Terminal } from "lucide-react"
- import Layout from "../components/Layout/Layout"
+ import Layout from "../Components/Layout/Layout"
  import { logsService } from "../services/logsService"
  import { useWebSocket } from "../hooks/useWebSocket"
  

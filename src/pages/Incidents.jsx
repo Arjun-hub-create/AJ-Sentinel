@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react"
    AlertTriangle, CheckCircle2, Clock, Zap,
    ChevronDown, ChevronUp, Activity, Plus, X
  } from "lucide-react"
- import Layout from "../components/Layout/Layout"
+ import Layout from "../Components/Layout/Layout"
  import { incidentsService } from "../services/incidentsService"
  import { useWebSocket } from "../hooks/useWebSocket"
  

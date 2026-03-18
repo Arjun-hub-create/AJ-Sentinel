@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Users, Plus, X, Trash2, Shield, Eye, Crown, Mail } from "lucide-react"
-import Layout from "../components/Layout/Layout"
+import Layout from "../Components/Layout/Layout"
 import api from "../services/api"
 import { useAuth } from "../context/AuthContext"
 

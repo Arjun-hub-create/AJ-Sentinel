@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react"
 import { motion } from "framer-motion"
 import { Key, Plus, Trash2, Copy, Check, User, Lock } from "lucide-react"
-import Layout from "../components/Layout/Layout"
+import Layout from "../Components/Layout/Layout"
 import api from "../services/api"
 import { useAuth } from "../context/AuthContext"
 

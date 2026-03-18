@@ -2,7 +2,7 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { useNavigate, Link } from "react-router-dom"
 import { Eye, EyeOff, Zap, Mail, Lock } from "lucide-react"
-import ParticleBackground from "../components/ParticleBackground"
+import ParticleBackground from "../Components/ParticleBackground"
 import { useAuth } from "../context/AuthContext"
 
 export default function Login() {

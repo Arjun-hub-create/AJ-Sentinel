@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react"
 import { motion } from "framer-motion"
 import { Activity, CheckCircle2, XCircle, AlertCircle, Clock } from "lucide-react"
-import Layout from "../components/Layout/Layout"
+import Layout from "../Components/Layout/Layout"
 import api from "../services/api"
 
 const STATUS_CFG = {

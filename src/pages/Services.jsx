@@ -2,7 +2,7 @@
  import { motion, AnimatePresence } from "framer-motion"
  import { LineChart, Line, ResponsiveContainer, Tooltip } from "recharts"
  import { Globe, Plus, X, Trash2, ExternalLink, Clock, Search, RefreshCw } from "lucide-react"
- import Layout from "../components/Layout/Layout"
+ import Layout from "../Components/Layout/Layout"
  import { servicesService } from "../services/servicesService"
  import { useWebSocket } from "../hooks/useWebSocket"
  
