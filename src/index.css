@@ -1,0 +1,332 @@
+ /* index.css — SENTINEL Global Styles */
+/* Font: Orbitron for headings (futuristic), JetBrains Mono for data/code */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CSS Variables ─────────────────────────────── */
+:root {
+  --bg-base:        #060912;
+  --bg-panel:       rgba(10, 14, 28, 0.85);
+  --bg-card:        rgba(15, 20, 40, 0.7);
+  --border-glow:    rgba(0, 212, 255, 0.25);
+  --border-subtle:  rgba(0, 212, 255, 0.08);
+  --cyan:           #00d4ff;
+  --cyan-dim:       #00a8cc;
+  --purple:         #7c3aed;
+  --purple-bright:  #a855f7;
+  --green:          #00ff88;
+  --red:            #ff3366;
+  --orange:         #ff8c42;
+  --yellow:         #ffd60a;
+  --text-primary:   #e2e8f0;
+  --text-muted:     #64748b;
+  --text-dim:       #334155;
+}
+
+/* ─── Base Reset ───────────────────────────────── */
+* {
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: var(--cyan-dim) transparent;
+}
+
+*::-webkit-scrollbar        { width: 4px; height: 4px; }
+*::-webkit-scrollbar-track  { background: transparent; }
+*::-webkit-scrollbar-thumb  { background: var(--cyan-dim); border-radius: 4px; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ─── Typography ────────────────────────────────── */
+.font-display  { font-family: 'Orbitron', monospace; }
+.font-mono     { font-family: 'JetBrains Mono', monospace; }
+
+h1, h2, h3 { font-family: 'Orbitron', monospace; letter-spacing: 0.05em; }
+
+/* ─── Glassmorphism ─────────────────────────────── */
+.glass {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+}
+
+.glass-bright {
+  background: rgba(0, 212, 255, 0.04);
+  backdrop-filter: blur(24px);
+  border: 1px solid var(--border-glow);
+  border-radius: 12px;
+}
+
+/* ─── Glow Effects ──────────────────────────────── */
+.glow-cyan   { box-shadow: 0 0 20px rgba(0, 212, 255, 0.3), 0 0 40px rgba(0, 212, 255, 0.1); }
+.glow-purple { box-shadow: 0 0 20px rgba(124, 58, 237, 0.4), 0 0 40px rgba(124, 58, 237, 0.15); }
+.glow-green  { box-shadow: 0 0 20px rgba(0, 255, 136, 0.3), 0 0 40px rgba(0, 255, 136, 0.1); }
+.glow-red    { box-shadow: 0 0 20px rgba(255, 51, 102, 0.4), 0 0 40px rgba(255, 51, 102, 0.15); }
+
+.text-glow-cyan   { text-shadow: 0 0 10px var(--cyan), 0 0 20px rgba(0,212,255,0.5); }
+.text-glow-purple { text-shadow: 0 0 10px var(--purple-bright); }
+.text-glow-green  { text-shadow: 0 0 10px var(--green); }
+
+/* ─── Grid Background ───────────────────────────── */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ─── Neon Border Animations ────────────────────── */
+@keyframes borderPulse {
+  0%, 100% { border-color: rgba(0, 212, 255, 0.2); }
+  50%       { border-color: rgba(0, 212, 255, 0.6); }
+}
+
+@keyframes scanline {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.8); }
+}
+
+@keyframes ping-ring {
+  0%   { transform: scale(1);   opacity: 0.8; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+@keyframes dataFlow {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes glitch {
+  0%   { clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%); transform: translate(-2px); }
+  10%  { clip-path: polygon(0 78%, 100% 78%, 100% 100%, 0 100%); transform: translate(2px); }
+  20%  { clip-path: polygon(0 44%, 100% 44%, 100% 46%, 0 46%); transform: translate(0); }
+  100% { clip-path: polygon(0 0, 0 0, 0 0, 0 0); transform: translate(0); }
+}
+
+/* ─── Utility Animations ────────────────────────── */
+.animate-pulse-dot   { animation: pulse-dot 2s ease-in-out infinite; }
+.animate-ping-ring   { animation: ping-ring 1.5s ease-out infinite; }
+.animate-data-flow   { animation: dataFlow 4s ease infinite; }
+.animate-float       { animation: float 3s ease-in-out infinite; }
+.animate-border-pulse{ animation: borderPulse 3s ease-in-out infinite; }
+
+/* ─── Status Dot ────────────────────────────────── */
+.status-dot {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.status-dot::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  animation: ping-ring 1.5s ease-out infinite;
+}
+
+.status-dot.online::before  { background: var(--green); }
+.status-dot.offline::before { background: var(--red); }
+.status-dot.degraded::before{ background: var(--orange); }
+
+/* ─── Skeleton Loader ───────────────────────────── */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255,255,255,0.05);
+  border-radius: 6px;
+}
+
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(0,212,255,0.08), transparent);
+  animation: shimmer 1.5s infinite;
+}
+
+/* ─── Sidebar Active Link ────────────────────────── */
+.nav-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  transition: all 0.2s ease;
+  letter-spacing: 0.03em;
+}
+
+.nav-link:hover {
+  color: var(--cyan);
+  background: rgba(0, 212, 255, 0.06);
+}
+
+.nav-link.active {
+  color: var(--cyan);
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.nav-link.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 60%;
+  background: var(--cyan);
+  border-radius: 0 2px 2px 0;
+  box-shadow: 0 0 8px var(--cyan);
+}
+
+/* ─── Metric Card Gradient Border ────────────────── */
+.gradient-border {
+  position: relative;
+  border-radius: 12px;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--cyan), var(--purple), var(--cyan));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  background-size: 200% 200%;
+  animation: dataFlow 4s ease infinite;
+}
+
+/* ─── Recharts Custom Styles ────────────────────── */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: rgba(0, 212, 255, 0.06) !important;
+}
+
+.recharts-tooltip-wrapper {
+  outline: none !important;
+}
+
+/* ─── Input / Button Base Styles ────────────────── */
+.input-cyber {
+  background: rgba(0, 212, 255, 0.04);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  padding: 10px 14px;
+  outline: none;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.input-cyber::placeholder { color: var(--text-dim); }
+
+.input-cyber:focus {
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1), 0 0 15px rgba(0, 212, 255, 0.2);
+}
+
+.btn-cyber {
+  font-family: 'Orbitron', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--cyan);
+  background: rgba(0, 212, 255, 0.1);
+  color: var(--cyan);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-cyber:hover {
+  background: rgba(0, 212, 255, 0.2);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-cyber-solid {
+  background: linear-gradient(135deg, #00d4ff, #0099cc);
+  color: #000;
+  border: none;
+  font-family: 'Orbitron', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 11px 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-cyber-solid:hover {
+  box-shadow: 0 0 24px rgba(0, 212, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+/* ─── Log Level Badges ──────────────────────────── */
+.badge-error   { background: rgba(255,51,102,0.15); color: #ff3366; border: 1px solid rgba(255,51,102,0.3); }
+.badge-warn    { background: rgba(255,214,10,0.15); color: #ffd60a; border: 1px solid rgba(255,214,10,0.3); }
+.badge-info    { background: rgba(0,212,255,0.15);  color: #00d4ff; border: 1px solid rgba(0,212,255,0.3); }
+.badge-debug   { background: rgba(100,116,139,0.15); color: #64748b; border: 1px solid rgba(100,116,139,0.3); }
+.badge-success { background: rgba(0,255,136,0.15); color: #00ff88; border: 1px solid rgba(0,255,136,0.3); }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}

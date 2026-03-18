@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+  # ── FastAPI Backend ───────────────────────────────
+  backend:
+    build: ./sentinel-backend
+    container_name: sentinel-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGODB_URL=mongodb://mongo:27017
+      - DATABASE_NAME=sentinel_db
+      - REDIS_URL=redis://redis:6379
+      - SECRET_KEY=change-me-in-production
+      - APP_ENV=development
+      - CORS_ORIGINS=["http://localhost:5173"]
+    depends_on:
+      - mongo
+      - redis
+    volumes:
+      - ./sentinel-backend:/app
+    restart: unless-stopped
+
+  # ── MongoDB ───────────────────────────────────────
+  mongo:
+    image: mongo:7.0
+    container_name: sentinel-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    restart: unless-stopped
+
+  # ── Redis ─────────────────────────────────────────
+  redis:
+    image: redis:7.2-alpine
+    container_name: sentinel-redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+  # ── React Frontend ────────────────────────────────
+  frontend:
+    build: ./sentinel-frontend
+    container_name: sentinel-frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  mongo_data:
