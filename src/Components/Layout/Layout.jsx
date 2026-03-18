@@ -16,47 +16,33 @@ const PAGE_TITLES = {
   "/logs":      "Log Explorer",
   "/incidents": "Incidents",
   "/team":      "Team",
-  "/status":    "Status Page",
+  "/status":    "Status",
   "/settings":  "Settings",
 }
 
-export default function Layout({ children }) {
+export default function Layout({ children, onNotifClick, unreadCount, notifPanel }) {
   const location = useLocation()
-  const title = PAGE_TITLES[location.pathname] || "SENTINEL"
+  const title    = PAGE_TITLES[location.pathname] || "AJ SENTINEL"
 
   return (
-    <div
-      className="flex h-screen overflow-hidden"
-      style={{ background: "#060912" }}
-    >
-      {/* Animated particle/grid background */}
+    <div className="flex h-screen overflow-hidden" style={{ background: "#060912" }}>
       <ParticleBackground />
 
-      {/* Ambient glow blobs */}
-      <div
-        className="fixed top-0 left-60 w-96 h-96 rounded-full pointer-events-none z-0"
-        style={{
-          background: "radial-gradient(circle, rgba(0,212,255,0.04) 0%, transparent 70%)",
-          filter: "blur(40px)",
-          transform: "translateY(-50%)"
-        }}
-      />
-      <div
-        className="fixed bottom-0 right-0 w-80 h-80 rounded-full pointer-events-none z-0"
-        style={{
-          background: "radial-gradient(circle, rgba(124,58,237,0.06) 0%, transparent 70%)",
-          filter: "blur(40px)",
-        }}
-      />
+      {/* Ambient glows */}
+      <div className="fixed top-0 left-60 w-96 h-96 rounded-full pointer-events-none z-0"
+        style={{ background: "radial-gradient(circle, rgba(0,212,255,0.04) 0%, transparent 70%)", filter: "blur(40px)", transform: "translateY(-50%)" }} />
+      <div className="fixed bottom-0 right-0 w-80 h-80 rounded-full pointer-events-none z-0"
+        style={{ background: "radial-gradient(circle, rgba(124,58,237,0.06) 0%, transparent 70%)", filter: "blur(40px)" }} />
 
-      {/* Sidebar */}
       <Sidebar />
 
-      {/* Main content area */}
       <div className="flex flex-col flex-1 overflow-hidden relative z-10">
-        <Navbar title={title} />
-
-        {/* Page content with transitions */}
+        <Navbar
+          title={title}
+          onNotifClick={onNotifClick}
+          unreadCount={unreadCount}
+          notifPanel={notifPanel}
+        />
         <main className="flex-1 overflow-y-auto overflow-x-hidden">
           <AnimatePresence mode="wait">
             <motion.div
