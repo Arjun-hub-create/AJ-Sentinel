@@ -1,12 +1,11 @@
 import axios from "axios"
 
 const api = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: import.meta.env.VITE_API_URL || "https://aj-sentinel.onrender.com",
   headers: { "Content-Type": "application/json" },
   timeout: 15000,
 })
 
- 
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("sentinel_token")
@@ -16,7 +15,6 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 )
 
- 
 api.interceptors.response.use(
   (response) => response,
   (error) => {
