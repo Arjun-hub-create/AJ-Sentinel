@@ -1,5 +1,13 @@
  # SENTINEL — Real-Time Developer Monitoring Platform
 
+
+🔐 JWT Authentication — Secure login/signup with bcrypt password hashing and role-based access control (RBAC)
+⚡ Real-Time WebSocket Streaming — Sub-second latency metric and incident broadcasts to all connected clients
+📊 Live Analytics Dashboard — 7-page animated React dashboard with p50/p95/p99 latency graphs, log explorer, and notification panel
+🤖 Automated Health Checks — APScheduler-powered 24/7 API monitoring with auto-incident detection
+🗝️ API Key Management — Scoped key generation for external log ingestion
+👥 Team Management — Invite and manage team members with granular permission scopes
+
 ## Project Structure
 
 ```
