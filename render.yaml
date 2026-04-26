@@ -29,10 +29,14 @@ services:
   # Frontend
   - type: web
     name: aj-sentinel-frontend
-    runtime: node
+    runtime: static
     rootDir: .
     buildCommand: npm install && npm run build
-    startCommand: npm start
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
     envVars:
       - key: VITE_API_URL
         sync: false
