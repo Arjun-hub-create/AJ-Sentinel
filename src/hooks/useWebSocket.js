@@ -1,6 +1,15 @@
 import { useState, useEffect, useRef, useCallback } from "react"
 
-const WS_URL = import.meta.env.VITE_WS_URL || "ws://localhost:8000/ws"
+const PRODUCTION_WS = "wss://aj-sentinel.onrender.com/ws"
+
+function resolveWsUrl() {
+  const fromEnv = import.meta.env.VITE_WS_URL?.trim()
+  if (fromEnv) return fromEnv.replace(/\/$/, "")
+  if (import.meta.env.PROD) return PRODUCTION_WS
+  return "ws://localhost:8000/ws"
+}
+
+const WS_URL = resolveWsUrl()
 const RECONNECT_DELAY = 3000   // ms before reconnect attempt
 const MAX_RECONNECTS  = 10
 

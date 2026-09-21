@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom"
 import { Eye, EyeOff, Zap, User, Mail, Lock } from "lucide-react"
 import ParticleBackground from "../Components/ParticleBackground"
 import { useAuth } from "../context/AuthContext"
+import { formatApiError } from "../utils/apiError"
 
 export default function Register() {
   const [form, setForm]         = useState({ name: "", email: "", password: "", confirm: "" })
@@ -28,7 +29,7 @@ export default function Register() {
       await register(form.name.trim(), form.email.trim(), form.password)
       navigate("/")
     } catch (err) {
-      setError(err.response?.data?.detail || "Registration failed — please try again")
+      setError(formatApiError(err, "Registration failed — please try again"))
     } finally {
       setLoading(false)
     }

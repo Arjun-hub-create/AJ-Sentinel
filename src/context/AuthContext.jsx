@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react"
-import api from "../services/api"
+import api, { wakeBackend } from "../services/api"
+import { withRetry } from "../utils/apiError"
 
 const AuthContext = createContext(null)
 
@@ -30,7 +31,11 @@ export function AuthProvider({ children }) {
   }, [])
 
   const login = async (email, password) => {
-    const { data } = await api.post("/api/auth/login", { email, password })
+    await wakeBackend().catch(() => {})
+    const { data } = await withRetry(() =>
+      api.post("/api/auth/login", { email, password })
+    )
+    if (!data?.access_token) throw new Error("Invalid login response")
     localStorage.setItem("sentinel_token", data.access_token)
     localStorage.setItem("sentinel_user", JSON.stringify(data.user))
     setUser(data.user)
@@ -38,7 +43,11 @@ export function AuthProvider({ children }) {
   }
 
   const register = async (name, email, password) => {
-    const { data } = await api.post("/api/auth/register", { name, email, password })
+    await wakeBackend().catch(() => {})
+    const { data } = await withRetry(() =>
+      api.post("/api/auth/register", { name, email, password })
+    )
+    if (!data?.access_token) throw new Error("Invalid registration response")
     localStorage.setItem("sentinel_token", data.access_token)
     localStorage.setItem("sentinel_user", JSON.stringify(data.user))
     setUser(data.user)

@@ -1,4 +1,5 @@
 from motor.motor_asyncio import AsyncIOMotorClient
+from fastapi import HTTPException
 from app.core.config import settings
 import logging
 
@@ -56,4 +57,9 @@ async def create_indexes():
 
 
 def get_db():
+    if db_instance.db is None:
+        raise HTTPException(
+            status_code=503,
+            detail="Database is unavailable — please try again in a moment.",
+        )
     return db_instance.db

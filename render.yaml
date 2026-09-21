@@ -39,6 +39,6 @@ services:
         destination: /index.html
     envVars:
       - key: VITE_API_URL
-        sync: false
+        value: https://aj-sentinel.onrender.com
       - key: VITE_WS_URL
-        sync: false
+        value: wss://aj-sentinel.onrender.com/ws

@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom"
 import { Eye, EyeOff, Zap, Mail, Lock } from "lucide-react"
 import ParticleBackground from "../Components/ParticleBackground"
 import { useAuth } from "../context/AuthContext"
+import { formatApiError } from "../utils/apiError"
 
 export default function Login() {
   const [email, setEmail]       = useState("")
@@ -26,9 +27,7 @@ export default function Login() {
       await login(email.trim(), password)
       navigate("/")
     } catch (err) {
-      // Show the exact error from backend
-      const msg = err.response?.data?.detail
-      setError(msg || "Login failed — check your credentials")
+      setError(formatApiError(err, "Login failed — check your credentials"))
     } finally {
       setLoading(false)
     }

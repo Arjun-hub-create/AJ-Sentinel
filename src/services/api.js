@@ -1,10 +1,21 @@
 import axios from "axios"
 
+const PRODUCTION_API = "https://aj-sentinel.onrender.com"
+
+function resolveApiBaseUrl() {
+  const fromEnv = import.meta.env.VITE_API_URL?.trim()
+  if (fromEnv) return fromEnv.replace(/\/$/, "")
+  if (import.meta.env.PROD) return PRODUCTION_API
+  return "http://localhost:8000"
+}
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "https://aj-sentinel.onrender.com",
+  baseURL: resolveApiBaseUrl(),
   headers: { "Content-Type": "application/json" },
-  timeout: 15000,
+  timeout: 60000,
 })
+
+const AUTH_FORM_PATHS = ["/api/auth/login", "/api/auth/register"]
 
 api.interceptors.request.use(
   (config) => {
@@ -18,13 +29,30 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    const status = error.response?.status
+    const path = error.config?.url || ""
+    const isAuthFormRequest = AUTH_FORM_PATHS.some((p) => path.includes(p))
+
+    // Wrong password / validation on login & register — show inline, do not redirect.
+    if (status === 401 && isAuthFormRequest) {
+      return Promise.reject(error)
+    }
+
+    if (status === 401) {
       localStorage.removeItem("sentinel_token")
       localStorage.removeItem("sentinel_user")
-      window.location.href = "/login"
+      const onAuthPage = ["/login", "/register"].includes(window.location.pathname)
+      if (!onAuthPage) {
+        window.location.href = "/login"
+      }
     }
     return Promise.reject(error)
   }
 )
+
+/** Ping backend (helps Render free tier wake from sleep before auth). */
+export async function wakeBackend() {
+  await api.get("/health", { timeout: 90000 })
+}
 
 export default api
